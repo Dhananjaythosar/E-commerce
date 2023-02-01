@@ -1,0 +1,159 @@
+<?php session_start(); 
+
+if(!isset($_SESSION['id'])) {
+    header('Location: login.html');
+}
+?>
+<?php
+include("connection.php");
+
+if(isset($_POST['submit'])) {	
+	$username = mysqli_real_escape_string($mysqli, $_POST['username']);
+	$address = mysqli_real_escape_string($mysqli, $_POST['address']);
+    $email = mysqli_real_escape_string($mysqli, $_POST['email']);
+    $mobile1=mysqli_real_escape_string($mysqli, $_POST['mobile1']);
+    $mobile2=mysqli_real_escape_string($mysqli, $_POST['mobile2']);
+    $dob=mysqli_real_escape_string($mysqli, $_POST['dob']);
+	$gender = mysqli_real_escape_string($mysqli, $_POST['gender']);
+
+    if(!isset($errorMsg)){
+        $sql = " UPDATE admin_users SET username = '$username',address = '$address',email = '$email' ,mobile1 = '$mobile1',mobile2 = '$mobile2',dob = '$dob',gender = '$gender' where id='{$_SESSION['id']}'" ;
+        $result = mysqli_query($mysqli, $sql);
+        if($result){
+         echo "<script type='text/javascript'>alert('Profile is updated successfully,Thank you!!!'); document.location = 'home.html'; </script>";
+            
+        }else{
+            $errorMsg = 'Error '.mysqli_error($mysqli);
+        }
+    }     
+}
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile | Easy-Shopping</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/profile.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/fontawesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="js/slider.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Balsamiq+Sans&family=Encode+Sans:wght@200;500&display=swap">
+</head>
+
+<body>
+    <div class="header">
+        <div class="container">
+            <div class="navbar">
+                <div class="logo">
+                    <img src="images/logo.png" width="200px">
+                </div>
+                <div class="search">
+                    <input type="text" placeholder="Search Anything You Want">
+                </div>
+                <a href="" class="searching">
+                    <img src="images/search.png" width="45px" height="45px">
+                </a>
+                <nav>
+                    <ul>
+                        <li><a href="home.php">Home</a></li>
+                        <li><a href="product.php">Products</a></li>
+                        <li><a href="profile.php">Profile</a></li>
+                        <li><a href="wishlist.php">Wishlist</a></li>
+                    </ul>
+                </nav>
+                <div class="cart">
+                    <a href="cart.html">
+                        <img src="images/cart.png" width="30px" height="30px">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="profile">
+        <div class="container1">
+            <div class="title">Profile</div>
+            <div class="content">
+                <form method="POST" action="" >
+                    <?php
+
+                          $sql= " SELECT * FROM admin_users WHERE id ='{$_SESSION['id']}'";
+                          $result = mysqli_query($mysqli,$sql);
+                          if(mysqli_num_rows($result)>0){
+                          while($row=mysqli_fetch_assoc($result)){
+                    
+                    ?>
+
+                    <div class="user-details">
+                        <div class="input-box">
+                            <span class="details">Username</span>
+                            <input type="text" name="username" placeholder="Enter your name" value="<?php echo $row['username'];?>"required>
+                        </div>
+                        <div class="input-box">
+                            <span class="details">Address</span>
+                            <input type="text" name="address"placeholder="Enter your address" value="<?php echo $row['address'];?>" required>
+                        </div>
+                        <div class="input-box">
+                            <span class="details">Email</span>
+                            <input type="email" name="email" placeholder="Enter your email " value="<?php echo $row['email'];?>"    required>
+                        </div>
+                        <div class="input-box">
+                            <span class="details">Mobile Number</span>
+                            <input type="number" name="mobile1" placeholder="Enter your mobile number" value="<?php echo $row['mobile1'];?>" required>
+                        </div>
+                        <div class="input-box">
+                            <span class="details">Alternate Mobile Number</span>
+                            <input type="number" name="mobile2" placeholder="Enter your Alternate mobile number" value="<?php echo $row['mobile2'];?>">
+                        </div>
+                        <div class="input-box">
+                            <span class="details">Date of Birth</span>
+                            <input type="date" name="dob" placeholder="Enter your Birthdate" value="<?php echo $row['dob'];?>" required >
+                        </div>
+                    </div>
+                    <div class="gender-details">
+                       <input type="radio" name="gender"  value="Male" id="dot-1" value="<?php echo $row['gender'];?>">   
+                        <input type="radio" name="gender"  value="Female" id="dot-2" value="<?php echo $row['gender'];?>">
+                        <input type="radio"  name="gender" value="Prefer not to say" id="dot-3" value="<?php echo $row['gender'];?>">
+                        <span class="gender-title">Gender</span>
+                        <div class="category">
+                            <label for="dot-1"> 
+                                <span class="dot one"></span>
+                                <span class="gender" >Male</span>
+                            </label>
+                            <label for="dot-2">                           
+                                <span class="dot two"></span>
+                                <span class="gender">Female</span>
+                            </label>
+                            <label for="dot-3">
+                                <span class="dot three"></span>
+                                <span class="gender" >Prefer not to say</span>
+                            </label>
+                        </div>
+                    </div>
+               <!--while loop close-->
+                    <?php
+                    }
+                }
+                    ?>
+
+                    <div class="button">
+                        <input type="submit" name="submit" value="Save Details">
+                        <input type="submit" formaction="logout.php"  value="Logout">
+                    </div>   
+                   
+                </form>
+
+            </div>
+        </div>
+    </div>
+    <!-- --------footer-------- -->
+
+    <?php include("footer.php");?>

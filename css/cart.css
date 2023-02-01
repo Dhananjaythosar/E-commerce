@@ -1,0 +1,107 @@
+.small-container1{
+    max-width: 1300px;
+    min-height: 100vh;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 40px 0;
+   margin: auto;
+}
+.small-container1 .title{
+    text-align: center;
+      position: relative;
+      line-height: 60px;
+      color: #555;
+}
+.small-container1 .title::after{
+    content: '';
+      background: #ff523b;
+      width: 80px;
+      height: 5px;
+      border-radius: 5px;
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+}
+
+.cart-page{
+    margin: 1px auto;
+}
+table{
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 3px;
+}
+.cart-info{
+    display: flex;
+    flex-wrap: wrap;
+    padding-bottom: 40px;
+}
+th{
+    text-align: left;
+    padding: 5px;
+    color: #fff;
+    background-color: #ff523b;
+    font-weight: normal;
+}
+
+td input{
+    width: 40px;
+    height: 30px;
+    padding: 5px;
+    
+}
+td a{
+    color: #ff523b;
+    font-size: 12px;
+}
+td img
+{
+    width:80px ;
+    height:80px ;
+    margin-right: 10px;
+    margin-top: 5px;
+}
+th{
+    text-align: left;
+    padding: 5px;
+    color: #fff;
+    background-color: #ff523b;
+    font-weight: normal;
+}
+.total-price {
+    margin-right: 10px;
+    margin-left: 750px;
+    margin-top: -250px;
+    
+    
+}
+
+.total-price table{
+    border-top: 4px solid #ff523b;
+    width: 100%;
+    max-width: 600px;
+    
+}
+
+ td:last-child{
+     text-align: right;
+ }
+ th:last-child{
+    text-align: right;
+}
+btn{
+    display: inline-block;
+    background-color: #ff0000;
+    color: white;
+    padding: 8px 30px;
+    margin: 30px 0;
+    border-radius: 30px;
+    transition: background 0.5;
+}
+.btn:hover{
+    background-color:#000;
+    color: white;
+}
